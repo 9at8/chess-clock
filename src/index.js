@@ -23,11 +23,11 @@ class App extends React.Component {
 
     return (
       <div className="App">
-        <p className={currentPlayer === PLAYER_1 && "Current"}>
-          Player 1: <span>{this.state[PLAYER_1] / 1000}</span>
+        <p className={currentPlayer === PLAYER_1 ? "Current" : undefined}>
+          Player 1: <input value={this.state[PLAYER_1] / 1000} disabled />
         </p>
-        <p className={currentPlayer === PLAYER_2 && "Current"}>
-          Player 2: <span>{this.state[PLAYER_2] / 1000}</span>
+        <p className={currentPlayer === PLAYER_2 ? "Current" : undefined}>
+          Player 2: <input value={this.state[PLAYER_2] / 1000} disabled />
         </p>
         <button
           onClick={() => {
