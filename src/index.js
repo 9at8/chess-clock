@@ -5,12 +5,13 @@ import "./styles.css";
 
 const INITIAL_TIME = 10000;
 const INCREMENT = 3000;
-const INTERVAL = 100;
+const INTERVAL = 10;
 const PLAYER_1 = "player1";
 const PLAYER_2 = "player2";
 
 class App extends React.Component {
   state = {
+    prevTime: null,
     [PLAYER_1]: INITIAL_TIME,
     [PLAYER_2]: INITIAL_TIME,
     currentPlayer: PLAYER_1,
@@ -56,9 +57,11 @@ class App extends React.Component {
   };
 
   decreaseTime = player => {
+    const current = Date.now();
     this.setState(
       state => ({
-        [player]: Math.max(state[player] - INTERVAL, 0)
+        [player]: Math.max(state[player] - (current - state.prevTime), 0),
+        prevTime: current
       }),
       () => {
         if (this.state[player] === 0) {
@@ -88,6 +91,7 @@ class App extends React.Component {
       if (oldTimer == null) {
         return {
           ...newState,
+          prevTime: Date.now(),
           timer: this.createTimer()
         };
       }
@@ -95,6 +99,7 @@ class App extends React.Component {
       clearInterval(oldTimer);
       return {
         ...newState,
+        prevTime: null,
         timer: undefined
       };
     });
